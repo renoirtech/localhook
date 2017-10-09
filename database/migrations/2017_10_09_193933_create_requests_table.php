@@ -15,7 +15,12 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('type');
+            $table->json('text_json');
+            $table->string('bin_id');
             $table->timestamps();
+            $table->softdeletes();
         });
     }
 
