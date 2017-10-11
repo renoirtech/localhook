@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        @foreach($bin->requests as $request)
+        @foreach($bin->requests->sortByDesc() as $request)
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
