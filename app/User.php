@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function bins()
+    {
+        return $this->hasMany('App\Bin');
+    }
+
+    public function environments()
+    {
+        return $this->hasMany('App\Environment');
+    }
 }

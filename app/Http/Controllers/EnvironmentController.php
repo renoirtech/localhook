@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Environment;
 use Illuminate\Http\Request;
 
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
+
 class EnvironmentController extends Controller
 {
     /**
@@ -14,7 +17,8 @@ class EnvironmentController extends Controller
      */
     public function index()
     {
-        //
+        $environments = Environment::paginate(50);
+        return view('environments.index')->with(compact('environments'));
     }
 
     /**
@@ -24,7 +28,8 @@ class EnvironmentController extends Controller
      */
     public function create()
     {
-        //
+        $environment = new Environment;
+        return view('environments.create')->with(compact('environment'));
     }
 
     /**
@@ -35,24 +40,50 @@ class EnvironmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'url'  => 'required|url',
+        ]);
+
+        $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $request->name . $request->url . \Carbon\Carbon::now()->format('U'));
+
+        $environment = Environment::create([
+            'uuid'    => $uuid,
+            'name'    => $request->name,
+            'url'     => $request->url,
+            'user_id' => auth()->user()->id
+        ]);
+
+        return redirect()->route('environments.show', ['uuid' => $environment->uuid]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Environment  $environment
+     * @param  string $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show(Environment $environment)
+    public function show($uuid)
     {
-        //
+        $environment = \App\Environment::where('uuid', $uuid)->first();
+        return view('environments.show')->with(compact('environment'));
+    }
+
+    /**
+     * Display the specified resource on API.
+     *
+     * @param  string $uuid
+     * @return \Illuminate\Http\Response
+     */
+    public function showAPI($uuid){
+        $environment = \App\Environment::where('uuid', $uuid)->first();
+        return $environment->only(['url']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Environment  $environment
+     * @param  string $uuid
      * @return \Illuminate\Http\Response
      */
     public function edit(Environment $environment)
@@ -75,7 +106,7 @@ class EnvironmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Environment  $environment
+     * @param  string $uuid
      * @return \Illuminate\Http\Response
      */
     public function destroy(Environment $environment)

@@ -15,6 +15,7 @@ class CreateEnvironmentsTable extends Migration
     {
         Schema::create('environments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('uuid');
             $table->string('name');
             $table->string('url');
             $table->integer('user_id');

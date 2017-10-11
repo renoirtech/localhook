@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Bin;
 use Illuminate\Http\Request;
 
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\UnsatisfiedDependencyException;
+
 class BinController extends Controller
 {
     /**
@@ -14,7 +17,8 @@ class BinController extends Controller
      */
     public function index()
     {
-        //
+        $bins = Bin::paginate(50);
+        return view('bins.index')->with(compact('bins'));
     }
 
     /**
@@ -24,7 +28,8 @@ class BinController extends Controller
      */
     public function create()
     {
-        //
+        $bin = new Bin;
+        return view('bins.create')->with(compact('bin'));
     }
 
     /**
@@ -35,7 +40,13 @@ class BinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = auth()->user();
+        $uuid = Uuid::uuid5(Uuid::NAMESPACE_DNS, $user->email . \Carbon\Carbon::now()->format('U'));
+        $bin = Bin::create([
+            'uuid'    => $uuid,
+            'user_id' => $user->id
+         ]);
+         return redirect()->route('bins.show', ['uuid' => $bin->uuid]);
     }
 
     /**
@@ -44,9 +55,10 @@ class BinController extends Controller
      * @param  \App\Bin  $bin
      * @return \Illuminate\Http\Response
      */
-    public function show(Bin $bin)
+    public function show($uuid)
     {
-        //
+        $bin = Bin::where('uuid', $uuid)->first();
+        return view('bins.show')->with(compact('bin'));
     }
 
     /**
@@ -55,7 +67,7 @@ class BinController extends Controller
      * @param  \App\Bin  $bin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Bin $bin)
+    public function edit($uuid)
     {
         //
     }
@@ -67,7 +79,7 @@ class BinController extends Controller
      * @param  \App\Bin  $bin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bin $bin)
+    public function update(Request $request, $uuid)
     {
         //
     }
@@ -78,7 +90,7 @@ class BinController extends Controller
      * @param  \App\Bin  $bin
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bin $bin)
+    public function destroy($uuid)
     {
         //
     }

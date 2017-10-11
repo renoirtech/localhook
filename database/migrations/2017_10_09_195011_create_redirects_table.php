@@ -18,7 +18,7 @@ class CreateRedirectsTable extends Migration
             $table->string('uuid');
             $table->string('response');
             $table->integer('bin_id');
-            $table->integer('request_id');
+            $table->integer('bin_request_id');
             $table->integer('environment_id');
             $table->timestamps();
             $table->softdeletes();

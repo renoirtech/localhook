@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $bins = \App\Bin::paginate(5);
+        return view('home')->with(compact('bins'));
     }
 }
