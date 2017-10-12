@@ -16,6 +16,10 @@
                             <td>{{ $environment->name }}</td>
                         </tr>
                         <tr>
+                            <th>URL</th>
+                            <td>{{ $environment->url }}</td>
+                        </tr>
+                        <tr>
                             <th>Owner</th>
                             <td>{{ $environment->user->name }}</td>
                         </tr>
