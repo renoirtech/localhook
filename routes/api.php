@@ -18,15 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/requests/{uuid}', 'BinRequestController@showAPI');
-//Route::get('/environments/{uuid}', 'EnvironmentController@showAPI');
-
-/**
- * Environments
- */
-Route::group(['prefix' => 'environments', 'namespace' => 'Environments'], function () {
-    Route::name('environments.index')->get('/', 'EnvironmentsController@index');
-    Route::name('environments.show')->get('/{environment}', 'EnvironmentsController@show');
-    Route::name('environments.store')->post('/', 'EnvironmentsController@store');
-    Route::name('environments.update')->put('/{environment}', 'EnvironmentsController@update');
-    Route::name('environments.destroy')->delete('/{environment}', 'EnvironmentsController@destroy');
-});
+Route::get('/environments/{uuid}', 'EnvironmentController@showAPI');
