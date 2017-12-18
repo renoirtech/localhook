@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Environment extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
         'name', 'uuid', 'url', 'user_id'
     ];

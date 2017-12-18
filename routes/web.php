@@ -40,12 +40,12 @@ Route::group(['prefix' => 'requests'], function(){
     Route::get('/destroy/{request}'  , 'BinRequestController@destroy')        ->name('requests.destroy');
 });
 
-Route::group(['prefix' => 'environments'], function(){
-    Route::get(''                           , 'EnvironmentController@index')          ->name('environments.index');
-    Route::get('/create'                    , 'EnvironmentController@create')         ->name('environments.create');
-    Route::post(''                          , 'EnvironmentController@store')          ->name('environments.store');
-    Route::get('{uuid}'                     , 'EnvironmentController@show')           ->name('environments.show');
-    Route::get('{uuid}/edit'                , 'EnvironmentController@edit')           ->name('environments.edit');
-    Route::put('{uuid}'                     , 'EnvironmentController@update')         ->name('environments.update');
-    Route::get('/destroy/{uuid}'            , 'EnvironmentController@destroy')        ->name('environments.destroy');
-});
+//Route::group(['prefix' => 'environments'], function(){
+//    Route::get(''                           , 'EnvironmentController@index')          ->name('environments.index');
+//    Route::get('/create'                    , 'EnvironmentController@create')         ->name('environments.create');
+//    Route::post(''                          , 'EnvironmentController@store')          ->name('environments.store');
+//    Route::get('{uuid}'                     , 'EnvironmentController@show')           ->name('environments.show');
+//    Route::get('{uuid}/edit'                , 'EnvironmentController@edit')           ->name('environments.edit');
+//    Route::put('{uuid}'                     , 'EnvironmentController@update')         ->name('environments.update');
+//    Route::get('/destroy/{uuid}'            , 'EnvironmentController@destroy')        ->name('environments.destroy');
+//});
